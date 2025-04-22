@@ -2,14 +2,15 @@
   "name": "nodejs-fullstack4",
   "version": "1.0.0",
   "description": "Aceasta este fisierul package.json ",
-  "main": "file.js",
+  "main": "express.js",
   "scripts": {
-    "start": "nodemon file.js",
+    "start": "nodemon express.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "express": "^5.1.0",
     "nodemon": "^3.1.9"
   }
 }
