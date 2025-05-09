@@ -5,8 +5,13 @@ const routerApi = require("./routes/index");
 // npm -> dotenv
 app.use(express.json());
 app.use("/api", routerApi);
+const passport = require("passport");
+
+require("./middleware/passportConfig");
+app.use(passport.initialize());
+
 // cream o functie prin care o sa ne conectam la cluster nostru care contine BD
-const db_url = "mongodb+srv://silviu:test@cluster0.f7oded6.mongodb.net/";
+const db_url = "mongodb+srv://silviu:test@cluster0.f7oded6.mongodb.net/"; // db_url = DB_URL
 
 const connectToMongoDB = async () => {
   try {
@@ -25,6 +30,3 @@ const connectToMongoDB = async () => {
 };
 
 connectToMongoDB();
-
-// noSQL -> baza de date non-relationale -> MongoDB
-// SQL -> model fix si o structura fixa + relatiile dintre tabele -> postrgreSQL -> sequelize
