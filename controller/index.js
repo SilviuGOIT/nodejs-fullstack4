@@ -1,5 +1,6 @@
 const { getAllUsers, createUser, checkUserDB } = require("../service/index");
-
+const fs = require("fs");
+const path = require("path");
 const jwt = require("jsonwebtoken");
 const secret = "Ceva_String"; // process.env.SECRET -> .env ( nu sta pe git) -> putem avea pe git, .envEXAMPLE ( secret = SECRET ....... ) Github Secrets,AWS Secrets
 const getUsersController = async (req, res, next) => {
@@ -68,8 +69,26 @@ const loginUserController = async (req, res, next) => {
   }
 };
 
+const uploadAvatarController = async (req, res, next) => {
+  try {
+    // jimp -> utiliza jimp sa comprimam dimensiunea si sa limitati 250x250
+    const uniqFilename = `${Date.now()}${path.extname(req.file.originalname)}`;
+
+    const destinationPath = path.join(
+      __dirname,
+      `../public/avatars/${uniqFilename}`
+    );
+    fs.renameSync(req.file.path, destinationPath);
+    req.user.avatarUrl = `/avatars/${uniqFilename}`;
+    await req.user.save();
+  } catch (error) {
+    res.status(404).json({ error: error.message });
+  }
+};
+
 module.exports = {
   getUsersController,
   registerUserController,
   loginUserController,
+  uploadAvatarController,
 };

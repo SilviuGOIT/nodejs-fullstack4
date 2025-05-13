@@ -32,4 +32,5 @@ const checkUserDB = async ({ email, password }) => {
     throw error;
   }
 };
+
 module.exports = { getAllUsers, checkUserDB, createUser };
